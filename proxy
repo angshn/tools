@@ -1,0 +1,29 @@
+#!/bin/sh
+IP=$1
+PORT=$2
+# example yauth -l 192.168.1.101 7890
+if [ -z $IP ];then
+    IP=10.20.121.99
+fi
+
+if [ -z $PORT ]; then
+    PORT=17890
+fi
+server=$IP:$PORT
+
+
+
+set_proxy(){
+    echo "Setting the proxy to $server"
+    export http_proxy=http://$server
+    export https_proxy=http://$server
+    export ALL_PROXY=http://$server
+}
+
+
+unset_proxy(){
+    echo "Unset proxy to $server"
+    unset http_proxy
+    unset https_proxy
+    unset ALL_PROXY
+}
