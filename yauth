@@ -19,7 +19,6 @@ import regex
 import os
 import configparser
 import urllib.parse
-from bs4 import BeautifulSoup
 
 # 封装post请求
 def post(url, headers={}, data={}):
@@ -185,20 +184,21 @@ class Serv:
         if login_return==1:
             print("登录失败。")
             return 
-        device_dict = self.get_online_list()
-        if len(device_dict) == 0:
+        device_list = list(self.get_online_list())
+        if len(device_list) == 0:
             print("没有需要下线的设备。")
             return
         # 筛选
-        for n,device_ip in enumerate(device_dict):
-            n+=1
-            print(f'{n}',device_ip,device_dict[device_ip])
+        for n,(ip,name,datetime) in enumerate(device_list):
+            print(f'{n+1}',ip,name,datetime)
         index_down=input("输入要下线的设备序号（用空格分隔，输入 0 则下线所有设备）：")
-        for index in index_down.split(' '):
-            if int(index)==0:
-                self.down_all(device_dict)
-            else:
-                self.down_all([list(device_dict.keys())[int(index)-1]])
+        target = list(map(int,index_down.split(' ')))
+
+        if len(target)==1 and  target[0]==0:
+            self.down_all([item[0] for item in device_list])
+        else :
+            li = [item[0] for i, item in enumerate(device_list) if i+1 in target ]
+            self.down_all(li)
         self._logout
 
     def show_verify(self, cont):
@@ -264,21 +264,19 @@ class Serv:
             "https://serv.ysu.edu.cn/selfservice/module/webcontent/web/onlinedevice_list.jsf",
             cookies=self.cookies,
         )
-        # rules = "IP.:.(.*?)<"
-        # pattern = regex.compile(rules)
+        rules = "IP.:.(.*?)<"
+        pattern_ip = regex.compile(rules)
+        device_ip_list=pattern_ip.findall(online_device_res.text)
 
-        soup = BeautifulSoup(online_device_res.text,'lxml')
+        rules = 'title="([\s\S]{2,20})" st'
+        pattern_name = regex.compile(rules)
+        device_name_list=pattern_name.findall(online_device_res.text)
 
-        all_device=soup.select(".devicelabel")
-        device_dict=dict()
-        for item_device in all_device:
-            device_name=item_device.select(".lablesub")[0].text.strip()
-            device_ip=item_device.select("#a1")[0].text.split(":")[1].strip()
-            device_time=item_device.select("span")[2].text.split("：")[1].strip()
-            device_mac=item_device.select("#a2")[0].text.strip()
-            device_dict[device_ip]=[device_name,device_time,device_mac]
-        # return pattern.findall(online_device_res.text)
-        return device_dict
+        rules = '上线时间 ：&nbsp;([\s\S]{2,20})<'
+        pattern_time = regex.compile(rules)
+        device_time_list=pattern_time.findall(online_device_res.text)
+
+        return zip(device_ip_list,device_name_list,device_time_list)
 
     def down_all(self, groups):
         for ip in groups:
