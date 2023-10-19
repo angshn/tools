@@ -18,6 +18,7 @@ import numpy as np
 import regex
 import os
 import configparser
+import urllib.parse
 
 
 # 封装post请求
@@ -290,7 +291,7 @@ def argparser():
         "--password",
         dest="password",
         type=str,
-        default=conf.get("USER","password"),
+        default=urllib.parse.quote(conf.get("USER","password")),
         help="password, your ysu account password.",
     )
     parser.add_argument(
