@@ -47,8 +47,18 @@ Logged!
 Current user is xx.
 IP is 10.20.xx.xx.
 ISP is 中国yy
-```
 
+#退出所有设备服务
+$ python yauth -d 
+
+```
+在yauth同目录下创建conf文件，输入以下内容
+```
+[USER]
+username=账号
+password=密码
+rsa_password=你的自助服务rsa密码
+```
 
 ## 相关项目
 
