@@ -1,4 +1,4 @@
-#!"c:\Users\syang\miniconda3\python.exe"
+#!/Users/syang/miniconda3/bin/python
 # coding:utf-8
 import sys
 import argparse
@@ -10,11 +10,12 @@ import urllib.parse
 
 from auth.netlogin import Netlogin
 from auth.service import Serv
-
+import os
 
 def argparser():
     conf = configparser.ConfigParser()
-    conf.read("conf")
+    confpath =os.path.dirname(__file__)
+    conf.read(os.path.join(confpath,"conf"))
     parser = argparse.ArgumentParser(
         description="登陆服务： 0.校园网 1.中国移动 2.中国联通 3.中国电信\n格式：\n登入：./netlogin -l -u 202222xxxxx -p password -i 0\n注销: ./netlogin -q\n"
     )
