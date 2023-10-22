@@ -52,12 +52,11 @@ ISP is 中国yy
 $ python yauth -d 
 
 ```
-在yauth同目录下创建conf文件，输入以下内容
+在yauth同目录下的conf文件，输入以下内容
 ```
 [USER]
-username=账号
-password=密码
-rsa_password=你的自助服务rsa密码
+username=202x22010101
+password=yourpassward
 ```
 
 ## 相关项目
@@ -67,6 +66,7 @@ rsa_password=你的自助服务rsa密码
 ## 主要项目负责人
 
 [@syang](https://github.com/angshn)
+[@yangn0](https://github.com/yangn0)
 
 ## 参与贡献方式
 
@@ -78,6 +78,7 @@ rsa_password=你的自助服务rsa密码
 感谢所有贡献的人。
 
 [@syang](https://github.com/angshn)
+[@yangn0](https://github.com/yangn0)
 
 ## 开源协议
 

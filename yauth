@@ -203,6 +203,7 @@ class Serv:
 
     def show_verify(self, cont):
         image = Image.open(BytesIO(cont))
+        # image = image.resize((12,6))
         self._show_verify(image)
 
     def _show_verify(self,img):
