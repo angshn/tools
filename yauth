@@ -11,11 +11,15 @@ import urllib.parse
 from auth.netlogin import Netlogin
 from auth.service import Serv
 import os
-
+import pathlib
 def argparser():
     conf = configparser.ConfigParser()
     confpath =os.path.dirname(__file__)
-    conf.read(os.path.join(confpath,"conf"))
+    
+    if os.path.exists(f"{str(pathlib.Path.home())}\\.config\\yauth.conf"):
+        conf.read(f"{str(pathlib.Path.home())}\\.config\\yauth.conf")
+    else:
+        conf.read(os.path.join(confpath,"conf"))
     parser = argparse.ArgumentParser(
         description="登陆服务： 0.校园网 1.中国移动 2.中国联通 3.中国电信\n格式：\n登入：./netlogin -l -u 202222xxxxx -p password -i 0\n注销: ./netlogin -q\n"
     )
