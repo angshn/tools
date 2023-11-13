@@ -1,3 +1,6 @@
 [USER]
 username=20222204xxxx
 password=password
+
+[SERV]
+OFFLINE_ALL=True

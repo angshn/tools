@@ -61,7 +61,9 @@ def argparser():
         help="Check if the user is logged in.",
     )
     parser.add_argument("-d", "--down", dest="down", action="store_true")
-    return parser.parse_args()
+    args = parser.parse_args()
+    args.conf = conf
+    return args
 
 
 if __name__ == "__main__":

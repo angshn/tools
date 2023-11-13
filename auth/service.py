@@ -26,7 +26,12 @@ class Serv:
         # 筛选
         for n,(ip,name,datetime) in enumerate(device_list):
             print(f'{n+1}',ip,name,datetime)
-        index_down=input("输入要下线的设备序号（用空格分隔，输入 0 则下线所有设备）：")
+        if self.args.conf.get("SERV","OFFLINE_ALL") == 'True':
+            print(self.args.conf.get("SERV","OFFLINE_ALL"))
+            index_down = '0'
+        
+        else :
+            index_down=input("输入要下线的设备序号（用空格分隔，输入 0 则下线所有设备）：")
         target = list(map(int,index_down.split(' ')))
 
         if len(target)==1 and  target[0]==0:
