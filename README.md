@@ -85,12 +85,7 @@ ISP is 中国yy
 $ python yauth -d 
 
 ```
-在yauth同目录下的conf文件，输入以下内容
-```
-[USER]
-username=202x22010101
-password=yourpassward
-```
+
 
 ## 相关项目
 
