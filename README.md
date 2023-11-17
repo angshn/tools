@@ -27,15 +27,48 @@ $ git clone https://github.com/angshn/tools.git
 
 ```
 
-## 用法
+## yauth用法
 **yauth**
 
+### 配置文件
+
+yauth可以使用配置文件来指定用户名和密码，可以在用户目录下新建`.config/yauth.conf`文件，或者直接修改项目目录下的'conf'文件，并添加或修改以下内容：
+
+```conf
+
+[USER]
+username=20222204xxxx
+password=password
+
+[SERV]
+# 默认下线所有设备
+OFFLINE_ALL=True
+
+```
+
+### 参数
+
+1. -l 登录；
+2. -i 指定isp，默认是[3] 中国电信，你可以在yauth源码中修改对应的默认值，或者直接-i 0指定宽带服务商；
+
+   0. 校园网 
+   1. 中国移动 
+   2. 中国联通 
+   3. 中国电信
+3. -q 退出当前设备的登录状态；
+4. -d 可选择的退出已登录的设备，如果配置了`OFFLINE_ALL`则会静默退出所有设备。
+
+### 
 ```shell
 # login
-$ python yauth -l yourstudentnumber
+$ python yauth -l
 >input your password hear
 Login successfully.
 
+# 使用校园网提供的宽带服务
+$ python yauth -l -i 0
+>input your password hear
+Login successfully.
 
 # logout
 $ python yauth -q
