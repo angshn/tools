@@ -16,8 +16,8 @@ def argparser():
     conf = configparser.ConfigParser()
     confpath =os.path.dirname(__file__)
     
-    if os.path.exists(f"{str(pathlib.Path.home())}\\.config\\yauth.conf"):
-        conf.read(f"{str(pathlib.Path.home())}\\.config\\yauth.conf")
+    if os.path.exists(os.path.join(pathlib.Path.home(),".config/yauth.conf")):
+        conf.read(os.path.join(pathlib.Path.home(),".config/yauth.conf"))
     else:
         conf.read(os.path.join(confpath,"conf"))
     parser = argparse.ArgumentParser(
