@@ -7,17 +7,13 @@ import urllib.parse
 
 # 封装post请求
 def post(url, headers={}, data={}):
-    data = bytes(urllib.parse.urlencode(data), encoding="utf-8")
-    request = urllib.request.Request(url, headers=headers, data=data)
-    response = urllib.request.urlopen(request)
+    response=req.post(url,headers=headers,data=data)
     return response
 
 
 # 封装get请求
 def get(url, headers={}):
-    request = urllib.request.Request(url, headers=headers)
-    response = urllib.request.urlopen(request)
-
+    response=req.get(url,headers=headers)
     return response
 
 
@@ -108,12 +104,12 @@ class Netlogin:
             }
             res = get("http://auth.ysu.edu.cn", headers=self.header)
             queryString = re.findall(
-                r"href='.*?\?(.*?)'", res.read().decode("utf-8"), re.S
+                r"href='.*?\?(.*?)'", res.text, re.S
             )
             self.data["queryString"] = queryString[0]
 
             res = post(self.url + "login", headers=self.header, data=self.data)
-            login_json = json.loads(res.read().decode("utf-8"))
+            login_json = json.loads(res.text)
             self.userindex = login_json["userIndex"]
             # self.info = login_json
             self.info = login_json["message"]
